@@ -1,25 +1,73 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            board: this.createBoard(),
+            users: 0
+        };
+        this.createBoard();
+    }
+
+    createBoard = () => {
+        const rows = 3;
+        const columns = 3;
+        const boardGrid = [];
+
+        for (let i = 0; i < rows*columns; i = i + 1) {
+            boardGrid.push({
+                content: ' ',
+                index: i
+            });
+        }
+
+        return boardGrid;
+    }
+
+    flipUser() {
+        let user;
+        this.state.user === 'one' ? user = 'two' : user = 'one';
+        this.setState({
+            user: user
+        });
+    }
+
+    render() {
+
+        const handleClick = (el, index) => {
+            const boardGrid = [...this.state.board];
+            this.state.user === 'one' ? boardGrid[index].content = 'X' : boardGrid[index].content = '0'
+            this.setState({
+                board: boardGrid
+            });
+
+            this.flipUser();
+        }
+
+        return <React.Fragment>
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "auto auto auto",
+                    textAlign: "center",
+                }}>
+                {
+                    this.state.board.map(el => {
+                        return (
+                            <button
+                                key={el.index}
+                                position={el.index}
+                                style={{padding: "32px"}}
+                                onClick={(e) => handleClick(e, el.index)}
+                            >{el.content}</button>
+                        )
+                    })
+                }
+            </div>
+        </React.Fragment>
+    }
 }
 
 export default App;
