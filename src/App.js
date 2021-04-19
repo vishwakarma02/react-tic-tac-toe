@@ -118,7 +118,9 @@ class App extends React.Component {
                     top: "0",
                     left: "0",
                     display: this.state.users.winner ? "block" : "none",
-                }}>Winner is {this.state.users.winner ? this.state.users.winner : 'yet to decide'}</div>
+                }}>
+                <p>Winner is {this.state.users.winner ? this.state.users.winner : 'yet to decide'}</p>
+            </div>
         </React.Fragment>
     }
 }
